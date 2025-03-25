@@ -12,13 +12,16 @@ body {
     margin: 0;
     height: 100vh;
     display: flex;
+    flex-direction: column;
+    position: relative;
     justify-content: center;
     align-items: center;
-    text-transform: uppercase;
+    gap: 1rem;
 }
 
 h1 {
     font-size: 5rem;
+    text-transform: uppercase;
 }
 
 a {
@@ -32,7 +35,7 @@ a:hover {
 
 .footer {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     width: 100%;
 }
 
@@ -41,4 +44,29 @@ a:hover {
     font-style: italic;
     font-size: 0.8rem;
     text-align: center;
+}
+
+button {
+    font-family: 'Iosevka Web', 'Courier New', Courier, monospace;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    /* text-decoration: underline; */
+    font-style: italic;
+    font-size: 1rem;
+    
+
+    color: #e4e4ef;
+}
+
+button:hover {
+    font-size: 1.1rem;
+}
+
+button:active {
+    text-decoration: underline;
 }
