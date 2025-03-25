@@ -1,0 +1,44 @@
+body {
+    font-family: 'Iosevka Web', 'Courier New', Courier, monospace;
+    background-color: #181818;
+    color: #e4e4ef;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.container {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 5rem;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.footer {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
+
+.footer p {
+    margin: 0;
+    font-style: italic;
+    font-size: 0.8rem;
+    text-align: center;
+}
