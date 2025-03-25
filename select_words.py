@@ -18,7 +18,7 @@ parole = filter(lambda x: not (x.endswith('i')), parole)
 # parole = filter(lambda x: not (x.endswith('ono') ), parole)
 parole = filter(lambda x: not (x[-1] in 'bcdfghjklmnpqrstvwxyz'), parole)
 parole = filter(lambda x: x.islower(), parole)
-parole = filter(lambda x: all(map(lambda c: not c.isdigit() and (c.isalpha() or c in '\'-'), x)), parole)
+parole = filter(lambda x: all(map(lambda c: not c.isdigit() and (c.isalpha() or c in '\'- '), x)), parole)
 
 with open('parole.js', 'w') as f:
     f.write('let parole = [')
