@@ -55,7 +55,7 @@ window.onload = () => {
         if (e.code === "Space" || e.code === "Enter") {
             const url = new URL(window.location.href);
             url.search = ''; 
-            window.history.pushState({}, '', imprecation_url);
+            window.history.replaceState({}, '', imprecation_url);
             window.location = url;
         }
     });
