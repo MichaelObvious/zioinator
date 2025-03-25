@@ -43,17 +43,25 @@ window.onload = () => {
 
     const url = new URL(window.location.href);
     url.search = ''; 
-    window.history.replaceState({page: 'zioinator'}, 'Zio-Inator 2000', url);
+    window.history.replaceState({}, '', url);
 
     label.innerHTML = `zio <a href="https://www.treccani.it/vocabolario/${final_word}">${final_word}</a>`
     button.onclick = () => {
         navigator.clipboard.writeText(imprecation_url);
     }
     // label.innerHTML = `zio <a href="https://en.wiktionary.org/wiki/${final_word}">${final_word}</a>`
+
+    document.addEventListener('keyup', (e) => {
+        if (e.code === "Space" || e.code === "Enter") {
+            const url = new URL(window.location.href);
+            url.search = ''; 
+            window.location = url;
+        }
+    });
 }
 
 window.addEventListener('beforeunload', (e) => {
     // e.preventDefault();
     console.log(imprecation_url);
-    window.history.pushState({page: 'zioinator'}, 'Zio-Inator 2000', imprecation_url);
+    window.history.pushState({}, '', imprecation_url);
 })
