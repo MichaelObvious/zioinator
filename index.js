@@ -1,11 +1,9 @@
+let imprecation_url = '';
+
 window.onload = () => {
     let label = document.getElementById("label");
     let button = document.getElementById("copy-link");
     let params = Object.fromEntries(new URLSearchParams(window.location.search));
-
-    const url = new URL(window.location.href);
-    url.search = ''; 
-    window.history.replaceState({}, '', url);
     
     let final_word = '';
     let global_idx = 0;
@@ -33,15 +31,29 @@ window.onload = () => {
         final_word = filtered[idx][0];
         global_idx = filtered[idx][1];
     }
-    
-    label.innerHTML = `zio <a href="https://www.treccani.it/vocabolario/${final_word}">${final_word}</a>`
-    button.onclick = () => {
+
+    {
         let idx = window.location.href.indexOf('?');
         let url = window.location.href;
         if (idx !== -1) {
             url = url.substring(0, idx);
         }
-        navigator.clipboard.writeText(url + `?n=${global_idx}`);
+        imprecation_url = url + `?n=${global_idx}`;
+    }
+
+    const url = new URL(window.location.href);
+    url.search = ''; 
+    window.history.replaceState({page: 'zioinator'}, 'Zio-Inator 2000', url);
+
+    label.innerHTML = `zio <a href="https://www.treccani.it/vocabolario/${final_word}">${final_word}</a>`
+    button.onclick = () => {
+        navigator.clipboard.writeText(imprecation_url);
     }
     // label.innerHTML = `zio <a href="https://en.wiktionary.org/wiki/${final_word}">${final_word}</a>`
 }
+
+window.addEventListener('beforeunload', (e) => {
+    // e.preventDefault();
+    console.log(imprecation_url);
+    window.history.pushState({page: 'zioinator'}, 'Zio-Inator 2000', imprecation_url);
+})
