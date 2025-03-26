@@ -1,32 +1,9 @@
 let imprecation_url = '';
 
-function adjustFontSize() {
-    const container = document.getElementsByClassName('container')[0];
-    const text = container.children[0];
-    const targetWidth = Math.max(Math.min(container.offsetWidth * 0.8, container.scrollHeight * 0.8), 200); // 80% of container width
-
-    // Start with a base font size (in pixels)
-    let fontSize = 10;
-    text.style.fontSize = fontSize + 'px';
-
-    // Increase font size until the text width is just under targetWidth
-    while (text.offsetWidth < targetWidth) {
-        fontSize++;
-        text.style.fontSize = fontSize + 'px';
-        // if overshoots, step back and break
-        if (text.offsetWidth > targetWidth) {
-            fontSize--;
-            text.style.fontSize = fontSize + 'px';
-            break;
-        }
-    }
-}
-
-window.addEventListener('resize', adjustFontSize);
-
 window.onload = () => {
     let label = document.getElementById("label");
-    let button = document.getElementById("copy-link");
+    let copy_button = document.getElementById("copy-link");
+    let gen_button = document.getElementById("generate");
     let params = Object.fromEntries(new URLSearchParams(window.location.search));
 
     let final_word = '';
@@ -70,8 +47,14 @@ window.onload = () => {
     window.history.replaceState({}, '', url);
 
     label.innerHTML = `zio <a href="https://www.treccani.it/vocabolario/${final_word}">${final_word}</a>`
-    button.onclick = () => {
+    copy_button.onclick = () => {
         navigator.clipboard.writeText(imprecation_url);
+    }
+    gen_button.onclick = () => {
+        const url = new URL(window.location.href);
+        url.search = '';
+        window.history.replaceState({}, '', imprecation_url);
+        window.location = url;
     }
     // label.innerHTML = `zio <a href="https://en.wiktionary.org/wiki/${final_word}">${final_word}</a>`
 
@@ -83,12 +66,9 @@ window.onload = () => {
             window.location = url;
         }
     });
-
-    adjustFontSize();
 }
 
 window.addEventListener('beforeunload', (e) => {
     // e.preventDefault();
-    console.log(imprecation_url);
     window.history.pushState({}, '', imprecation_url);
 })

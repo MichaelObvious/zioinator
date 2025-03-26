@@ -20,8 +20,14 @@ body {
     gap: 1rem;
 }
 
+.buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+}
+
 h1 {
-    font-size: 5rem;
+    font-size: min(10vw, 5rem);
     display: inline-block;
     white-space: nowrap;
     text-transform: uppercase;
