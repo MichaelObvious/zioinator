@@ -1,10 +1,34 @@
 let imprecation_url = '';
 
+function adjustFontSize() {
+    const container = document.getElementsByClassName('container')[0];
+    const text = container.children[0];
+    const targetWidth = Math.max(Math.min(container.offsetWidth * 0.8, container.scrollHeight * 0.8), 200); // 80% of container width
+
+    // Start with a base font size (in pixels)
+    let fontSize = 10;
+    text.style.fontSize = fontSize + 'px';
+
+    // Increase font size until the text width is just under targetWidth
+    while (text.offsetWidth < targetWidth) {
+        fontSize++;
+        text.style.fontSize = fontSize + 'px';
+        // if overshoots, step back and break
+        if (text.offsetWidth > targetWidth) {
+            fontSize--;
+            text.style.fontSize = fontSize + 'px';
+            break;
+        }
+    }
+}
+
+window.addEventListener('resize', adjustFontSize);
+
 window.onload = () => {
     let label = document.getElementById("label");
     let button = document.getElementById("copy-link");
     let params = Object.fromEntries(new URLSearchParams(window.location.search));
-    
+
     let final_word = '';
     let global_idx = 0;
     if ('n' in params && !(params.n === undefined || Number(params.n) === undefined || Number.isNaN(Number(params.n)) || Number(params.n) === Infinity || Number(params.n) === -Infinity)) {
@@ -26,7 +50,7 @@ window.onload = () => {
         parole.forEach((x, i) => enum_parole[i] = [x, i]);
         let filtered = enum_parole.filter(([s, i], _i, _xs) => s.startsWith(starting_letter));
 
-        let idx = Math.round(Math.random() * (filtered.length-1));
+        let idx = Math.round(Math.random() * (filtered.length - 1));
 
         final_word = filtered[idx][0];
         global_idx = filtered[idx][1];
@@ -42,7 +66,7 @@ window.onload = () => {
     }
 
     const url = new URL(window.location.href);
-    url.search = ''; 
+    url.search = '';
     window.history.replaceState({}, '', url);
 
     label.innerHTML = `zio <a href="https://www.treccani.it/vocabolario/${final_word}">${final_word}</a>`
@@ -54,11 +78,13 @@ window.onload = () => {
     document.addEventListener('keyup', (e) => {
         if (e.code === "Space" || e.code === "Enter") {
             const url = new URL(window.location.href);
-            url.search = ''; 
+            url.search = '';
             window.history.replaceState({}, '', imprecation_url);
             window.location = url;
         }
     });
+
+    adjustFontSize();
 }
 
 window.addEventListener('beforeunload', (e) => {
