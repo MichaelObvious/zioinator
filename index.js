@@ -95,7 +95,7 @@ window.onload = () => {
         const imageURL = canvas.toDataURL('image/png');
         const downloadLink = document.createElement('a');
         downloadLink.href = imageURL;
-        downloadLink.download = `zio-${final_word.replace(' ', '-')}.png`;
+        downloadLink.download = `zio-${final_word.replaceAll(' ', '-')}.png`;
         downloadLink.click();
     }
     // label.innerHTML = `zio <a href="https://en.wiktionary.org/wiki/${final_word}">${final_word}</a>`
