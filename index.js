@@ -4,6 +4,7 @@ window.onload = () => {
     let label = document.getElementById("label");
     let copy_button = document.getElementById("copy-link");
     let gen_button = document.getElementById("generate");
+    let render_button = document.getElementById("render");
     let params = Object.fromEntries(new URLSearchParams(window.location.search));
 
     let final_word = '';
@@ -56,6 +57,47 @@ window.onload = () => {
         window.history.replaceState({}, '', imprecation_url);
         window.location = url;
     }
+    render_button.onclick = () => {
+        // Create a canvas element
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size
+        canvas.width = 600;
+        canvas.height = 200;
+        let padding = canvas.width/85;
+
+        // Background (optional)
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#181818';
+        ctx.fillRect(padding, padding, canvas.width-padding*2, canvas.height-padding*2);
+        
+        let fontSize = 100;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'alphabetic';
+        let text = `zio ${final_word}`.toUpperCase()
+
+        do {
+            ctx.font = `bold ${fontSize}px Iosevka Web`;
+            const textWidth = ctx.measureText(text).width;
+            if (textWidth <= canvas.width * 0.85) break; // leave some padding
+            fontSize -= 1;
+        } while (fontSize > 5); // minimum font size
+
+        // Draw text
+        ctx.fillStyle = '#e4e4ef';
+        const metrics = ctx.measureText(text);
+        const textHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+        ctx.fillText(text, canvas.width / 2, canvas.height / 2 + textHeight / 2 - metrics.actualBoundingBoxDescent);
+
+        // Convert and download image
+        const imageURL = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = imageURL;
+        downloadLink.download = `zio-${final_word.replace(' ', '-')}.png`;
+        downloadLink.click();
+    }
     // label.innerHTML = `zio <a href="https://en.wiktionary.org/wiki/${final_word}">${final_word}</a>`
 
     document.addEventListener('keyup', (e) => {
@@ -72,3 +114,5 @@ window.addEventListener('beforeunload', (e) => {
     // e.preventDefault();
     window.history.pushState({}, '', imprecation_url);
 })
+
+console.log(`https://michaelobvious.github.io/zioinator?n=${parole.indexOf('prepuzio')}`)
